@@ -8,9 +8,11 @@
     <tbody>
          <!--articleList에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
     <tr th:each="article : ${articleList}">
-          <!--article 객체의 제목을 출력-->
-        <td th:text="${article.subject}"></td>
-          <!--article 객체의 작성일시를  출력-->
+          <!-- article_detail 링크를 제목에 추가 -->
+        <td>
+            <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
+        </td>
+          <!--article 객체의 작성일시를 출력-->
         <td th:text="${article.createDate}"></td>
     </tr>
     </tbody>
