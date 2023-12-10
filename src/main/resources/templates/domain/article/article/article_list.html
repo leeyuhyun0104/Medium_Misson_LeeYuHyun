@@ -1,0 +1,17 @@
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>작성일시</th>
+    </tr>
+    </thead>
+    <tbody>
+         <!--articleList에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
+    <tr th:each="article : ${articleList}">
+          <!--article 객체의 제목을 출력-->
+        <td th:text="${article.subject}"></td>
+          <!--article 객체의 작성일시를  출력-->
+        <td th:text="${article.createDate}"></td>
+    </tr>
+    </tbody>
+</table>
