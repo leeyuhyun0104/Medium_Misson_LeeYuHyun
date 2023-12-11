@@ -11,8 +11,7 @@
         <tbody>
            <!--articleList에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
         <tr th:each="article, loop : ${paging}">
-               <!--번호 출력-->
-            <td th:text="${loop.count}"></td>
+            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                <!--article_detail 링크를 제목에 추가-->
             <td>
                 <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.title}"></a>
