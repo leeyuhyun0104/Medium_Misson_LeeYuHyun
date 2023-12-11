@@ -4,15 +4,12 @@ import com.ll.medium.domain.article.article.entity.Article;
 import com.ll.medium.domain.article.article.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @RequestMapping("/post")
 @RequiredArgsConstructor
 @Controller
@@ -20,9 +17,9 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Article> articleList = this.articleService.getList(); // getList 메서드 사용해서 articleList 조회
-        model.addAttribute("articleList", articleList); // Model 객체에 "articleList"라는 이름으로 값을 저장
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<Article> paging = this.articleService.getList(page); // getList 메서드 사용해서 articleList 조회
+        model.addAttribute("paging", paging); // Model 객체에 "articleList"라는 이름으로 값을 저장
         return "domain/article/article/article_list";
     }
 

@@ -4,10 +4,12 @@ import com.ll.medium.DataNotFoundException;
 import com.ll.medium.domain.article.article.entity.Article;
 import com.ll.medium.domain.article.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,8 +17,10 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public List<Article> getList() {
-        return this.articleRepository.findAll(); // findAll 메서드로 articleList 생성
+    // 질문 목록 페이지
+    public Page<Article> getList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.articleRepository.findAll(pageable);
     }
 
     // id값으로 Article 데이터를 조회하는 메서드
