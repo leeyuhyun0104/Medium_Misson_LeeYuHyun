@@ -15,7 +15,7 @@
             <td th:text="${loop.count}"></td>
                <!--article_detail 링크를 제목에 추가-->
             <td>
-                <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
+                <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.title}"></a>
             </td>
                <!--#temporals.format 이용해서 날짜 출력-->
             <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>

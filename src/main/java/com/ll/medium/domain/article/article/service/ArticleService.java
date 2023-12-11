@@ -29,12 +29,14 @@ public class ArticleService {
         }
     }
 
-    public void create(String subject, String content) {
+    public void create(String title, String body) {
         Article a = new Article();
-        a.setSubject(subject);
-        a.setContent(content);
+        a.setTitle(title);
+        a.setBody(body);
         a.setCreateDate(LocalDateTime.now());
         this.articleRepository.save(a);
     }
+
+
 }
 
