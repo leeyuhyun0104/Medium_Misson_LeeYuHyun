@@ -7,6 +7,7 @@ import com.ll.medium.domain.member.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,11 +36,13 @@ public class ArticleController {
         return "domain/article/article/article_detail";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public String articleCreate(Article article) {
         return "domain/article/article/article_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String articleCreate(@Valid Article article, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()){
