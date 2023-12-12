@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.persistence.ManyToOne;
+import com.ll.medium.domain.member.member.entity.Member;
+
 import java.time.LocalDateTime;
 @Getter
 @Setter
@@ -25,4 +28,7 @@ public class Article {
     private String body;
 
     private LocalDateTime createDate;
+
+    @ManyToOne
+    private Member author;
 }

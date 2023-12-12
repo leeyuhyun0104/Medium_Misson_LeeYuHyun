@@ -3,6 +3,7 @@ package com.ll.medium.domain.article.article.service;
 import com.ll.medium.DataNotFoundException;
 import com.ll.medium.domain.article.article.entity.Article;
 import com.ll.medium.domain.article.article.repository.ArticleRepository;
+import com.ll.medium.domain.member.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,11 +39,12 @@ public class ArticleService {
         }
     }
 
-    public void create(String title, String body) {
+    public void create(String title, String body, Member user) {
         Article a = new Article();
         a.setTitle(title);
         a.setBody(body);
         a.setCreateDate(LocalDateTime.now());
+        a.setAuthor(user);
         this.articleRepository.save(a);
     }
 
