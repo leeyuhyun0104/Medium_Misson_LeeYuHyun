@@ -48,5 +48,11 @@ public class MemberController {
 
         long id = member.getId();
 
-        return "redirect:/?msg=No %d member joined.".formatted(id);    }
+        return "redirect:/?msg=No %d member joined.".formatted(id);
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "domain/member/member/login";
+    }
 }
