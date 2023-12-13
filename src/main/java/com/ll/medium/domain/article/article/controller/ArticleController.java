@@ -18,21 +18,20 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping("/post")
 @RequiredArgsConstructor
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
     private final MemberService memberService;
 
-    @GetMapping("/list")
+    @GetMapping("post/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Article> paging = this.articleService.getList(page); // getList 메서드 사용해서 articleList 조회
         model.addAttribute("paging", paging); // Model 객체에 "articleList"라는 이름으로 값을 저장
         return "domain/article/article/article_list";
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "post/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, Principal principal) {
         Article article = this.articleService.getArticle(id); // ArticleService의 getArticle 메서드 호출
         if (!article.getIsPublished()) { // 비공개 글인 경우
@@ -45,14 +44,14 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/write")
+    @GetMapping("post/write")
     public String articleCreate(ArticleForm articleForm) {
         articleForm.setIsPublished(true); // 새 글 작성 시 기본값을 공개로 설정
         return "domain/article/article/article_form";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/write")
+    @PostMapping("post/write")
     public String articleCreate(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()){
             return "domain/article/article/article_form"; // 오류가 있는 경우 글 작성 폼으로
@@ -63,7 +62,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/modify")
+    @GetMapping("post/{id}/modify")
     public String articleModify(ArticleForm articleForm, @PathVariable("id") Integer id, Principal principal) {
         Article article = this.articleService.getArticle(id);
         if(!article.getAuthor().getUsername().equals(principal.getName())) {
@@ -75,7 +74,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{id}/modify")
+    @PostMapping("post/{id}/modify")
     public String articleModify(@Valid ArticleForm articleForm, BindingResult bindingResult,
                                  Principal principal, @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors()) {
@@ -90,7 +89,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/delete")
+    @GetMapping("post/{id}/delete")
     public String articleDelete(Principal principal, @PathVariable("id") Integer id){
         Article article = this.articleService.getArticle(id);
         if(!article.getAuthor().getUsername().equals(principal.getName())){
@@ -100,11 +99,18 @@ public class ArticleController {
         return "redirect:/";
     }
 
-    @GetMapping("/myList")
+    @GetMapping("post/myList")
     public String myArticles(Model model, Principal principal) {
         String username = principal.getName(); // 현재 로그인한 사용자의 username을 가져옴
         List<Article> myArticles = this.articleService.getMyArticles(username); // 사용자의 작성 글 목록을 가져옴
         model.addAttribute("myArticles", myArticles); // Model 객체에 "myArticles"라는 이름으로 값을 저장
         return "domain/article/article/my_articles";
+    }
+
+    @GetMapping("/b/{username}")
+    public String userArticles(Model model, @PathVariable("username") String username) {
+        List<Article> userArticles = this.articleService.getUserArticles(username);
+        model.addAttribute("userArticles", userArticles);
+        return "domain/article/article/user_articles";
     }
 }
