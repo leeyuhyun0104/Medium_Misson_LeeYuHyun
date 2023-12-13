@@ -1,13 +1,9 @@
 package com.ll.medium.domain.article.article.entity;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.persistence.ManyToOne;
-import com.ll.medium.domain.member.member.entity.Member;
 
 import java.time.LocalDateTime;
 @Getter
@@ -19,11 +15,8 @@ public class Article {
     private Integer id;
 
     @Column(length = 200)
-    @NotEmpty(message="제목은 필수항목입니다.")
-    @Size(max=200)
     private String title;
 
-    @NotEmpty(message="내용은 필수항목입니다.")
     @Column(columnDefinition = "TEXT")
     private String body;
 
