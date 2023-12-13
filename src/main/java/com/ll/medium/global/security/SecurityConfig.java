@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .loginPage("/member/login")
                         .defaultSuccessUrl("/"))
                 .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
         ;
