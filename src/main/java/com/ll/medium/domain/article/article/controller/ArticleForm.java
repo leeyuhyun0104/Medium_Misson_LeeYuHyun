@@ -15,4 +15,6 @@ public class ArticleForm {
 
     @NotEmpty(message="내용은 필수항목입니다.")
     private String body;
+
+    private Boolean isPublished = false;
 }

@@ -26,4 +26,7 @@ public class Article {
     private Member author;
 
     private LocalDateTime modifyDate;
+
+    @Column(name = "IS_PUBLISHED")
+    private Boolean isPublished;
 }

@@ -32,8 +32,13 @@ public class ArticleController {
     }
 
     @GetMapping(value = "/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @PathVariable("id") Integer id, Principal principal) {
         Article article = this.articleService.getArticle(id); // ArticleService의 getArticle 메서드 호출
+        if (!article.getIsPublished()) { // 비공개 글인 경우
+            if (principal == null) { // 로그인한 사용자가 아니라면
+                return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+            }
+        }
         model.addAttribute("article", article);
         return "domain/article/article/article_detail";
     }
@@ -41,6 +46,7 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public String articleCreate(ArticleForm articleForm) {
+        articleForm.setIsPublished(true); // 새 글 작성 시 기본값을 공개로 설정
         return "domain/article/article/article_form";
     }
 
@@ -51,7 +57,7 @@ public class ArticleController {
             return "domain/article/article/article_form"; // 오류가 있는 경우 글 작성 폼으로
         }
         Member member = this.memberService.getMember(principal.getName());
-        this.articleService.create(articleForm.getTitle(), articleForm.getBody(), member); //ArticleService 호출해서 새 글 저장
+        this.articleService.create(articleForm.getTitle(), articleForm.getBody(), member, articleForm.getIsPublished()); //ArticleService 호출해서 새 글 저장
         return "redirect:/post/list"; // 저장 후 목록으로 이동
     }
 

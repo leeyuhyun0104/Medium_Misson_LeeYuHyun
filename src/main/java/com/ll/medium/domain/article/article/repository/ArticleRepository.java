@@ -17,4 +17,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Page<Article> findAll(Pageable pageable); // Pageable 객체를 입력으로 받아 Page<Article> 타입 객체를 리턴하는 메서드
 
     List<Article> findTop30ByOrderByCreateDateDesc();
+
+    Page<Article> findByIsPublished(boolean isPublished, Pageable pageable);
 }

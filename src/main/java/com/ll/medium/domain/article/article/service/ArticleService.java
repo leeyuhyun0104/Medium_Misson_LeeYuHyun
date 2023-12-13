@@ -39,12 +39,13 @@ public class ArticleService {
         }
     }
 
-    public void create(String title, String body, Member user) {
+    public void create(String title, String body, Member user, Boolean isPublished) {
         Article a = new Article();
         a.setTitle(title);
         a.setBody(body);
         a.setCreateDate(LocalDateTime.now());
         a.setAuthor(user);
+        a.setIsPublished(isPublished);
         this.articleRepository.save(a);
     }
 
@@ -62,6 +63,13 @@ public class ArticleService {
     public List<Article> getLatestArticles() {
         // 최신 30개의 글을 가져오는 메서드 구현
         return articleRepository.findTop30ByOrderByCreateDateDesc();
+    }
+
+    public Page<Article> getAllArticles(boolean isPublished, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.articleRepository.findByIsPublished(isPublished, pageable);
     }
 }
 
