@@ -17,12 +17,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Transactional
     public Member join(String username, String password) {
-        Member member = new Member(username, password);
+        Member member = new Member();
+        member.setUsername(username);
         member.setPassword(passwordEncoder.encode(password));
-        memberRepository.save(member);
+        this.memberRepository.save(member);
         return member;
     }
 
