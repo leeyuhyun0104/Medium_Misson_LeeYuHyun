@@ -58,5 +58,12 @@ public class ArticleService {
     public void delete(Article article) {
         this.articleRepository.delete(article);
     }
+
+    public List<Article> getLatestArticles() {
+        // 최신 30개의 글을 가져오는 메서드 구현
+        return articleRepository.findTop30ByOrderByCreateDateDesc();
+    }
 }
+
+
 
