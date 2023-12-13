@@ -21,4 +21,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Page<Article> findByIsPublished(boolean isPublished, Pageable pageable);
 
     List<Article> findByAuthorUsername(String username);
+
+    Article findByAuthorUsernameAndId(String username, Integer id);
 }

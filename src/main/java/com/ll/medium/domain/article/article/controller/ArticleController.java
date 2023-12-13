@@ -113,4 +113,16 @@ public class ArticleController {
         model.addAttribute("userArticles", userArticles);
         return "domain/article/article/user_articles";
     }
+
+    @GetMapping("/b/{username}/{id}")
+    public String userArticleDetail(Model model, @PathVariable("username") String username, @PathVariable("id") Integer id, Principal principal) {
+        Article article = this.articleService.getUserArticle(username, id);
+        if (!article.getIsPublished()) { // 비공개 글인 경우
+            if (principal == null) { // 로그인한 사용자가 아니라면
+                return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+            }
+        }
+        model.addAttribute("article", article);
+        return "domain/article/article/user_article_detail";
+    }
 }

@@ -79,6 +79,10 @@ public class ArticleService {
     public List<Article> getUserArticles(String username) {
         return articleRepository.findByAuthorUsername(username);
     }
+
+    public Article getUserArticle(String username, Integer id) {
+        return articleRepository.findByAuthorUsernameAndId(username, id);
+    }
 }
 
 

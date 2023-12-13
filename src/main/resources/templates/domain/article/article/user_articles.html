@@ -6,18 +6,18 @@
         <tr class="text-center">
             <th>번호</th>
             <th style="width:50%">제목</th>
-            <th>공개 여부</th>
+            <th>글 공개 여부</th>
             <th>글쓴이</th>
             <th>작성일시</th>
         </tr>
         </thead>
         <tbody>
-        <!--myArticles에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
+        <!--userArticles에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
         <tr class="text-center" th:each="article, loop : ${userArticles}">
             <td th:text="${loop.index + 1}"></td>
-            <!--article_detail 링크를 제목에 추가-->
+            <!--user_article_detail 링크를 제목에 추가-->
             <td class="text-start">
-                <a th:href="@{|/post/${article.id}|}" th:text="${article.title}"></a>
+                <a th:href="@{|/b/${article.author.username}/${article.id}|}" th:text="${article.title}"></a>
             </td>
             <td>
                 <span th:if="${article.isPublished}">공개</span>
