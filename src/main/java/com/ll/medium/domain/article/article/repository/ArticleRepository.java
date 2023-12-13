@@ -19,4 +19,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     List<Article> findTop30ByOrderByCreateDateDesc();
 
     Page<Article> findByIsPublished(boolean isPublished, Pageable pageable);
+
+    List<Article> findByAuthorUsername(String username);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -99,4 +100,11 @@ public class ArticleController {
         return "redirect:/";
     }
 
+    @GetMapping("/myList")
+    public String myArticles(Model model, Principal principal) {
+        String username = principal.getName(); // 현재 로그인한 사용자의 username을 가져옴
+        List<Article> myArticles = this.articleService.getMyArticles(username); // 사용자의 작성 글 목록을 가져옴
+        model.addAttribute("myArticles", myArticles); // Model 객체에 "myArticles"라는 이름으로 값을 저장
+        return "domain/article/article/my_articles";
+    }
 }

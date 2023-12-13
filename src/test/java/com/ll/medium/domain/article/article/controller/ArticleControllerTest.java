@@ -15,7 +15,7 @@ public class ArticleControllerTest {
         for (int i = 1; i <= 300; i++) {
             String title = String.format("테스트 데이터입니다:[%03d]", i);
             String body = "테스트";
-            this.articleService.create(title, body, null);
+            this.articleService.create(title, body, null, false);
         }
     }
 }

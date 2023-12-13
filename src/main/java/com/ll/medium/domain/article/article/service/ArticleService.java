@@ -71,6 +71,10 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.articleRepository.findByIsPublished(isPublished, pageable);
     }
+
+    public List<Article> getMyArticles(String username) {
+        return articleRepository.findByAuthorUsername(username);
+    }
 }
 
 
