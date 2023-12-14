@@ -1,4 +1,4 @@
-package com.ll.medium.domain.article.article.controller;
+package com.ll.medium.domain.article.article.entity;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

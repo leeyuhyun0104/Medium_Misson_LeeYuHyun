@@ -1,8 +1,8 @@
-package com.ll.medium.domain.article.article.service;
+package com.ll.medium.domain.comment.comment.service;
 
 import com.ll.medium.domain.article.article.entity.Article;
-import com.ll.medium.domain.article.article.entity.Comment;
-import com.ll.medium.domain.article.article.repository.CommentRepository;
+import com.ll.medium.domain.comment.comment.entity.Comment;
+import com.ll.medium.domain.comment.comment.repository.CommentRepository;
 import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.member.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

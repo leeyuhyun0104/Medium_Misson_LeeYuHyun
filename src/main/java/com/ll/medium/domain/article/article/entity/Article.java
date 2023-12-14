@@ -1,5 +1,6 @@
 package com.ll.medium.domain.article.article.entity;
 
+import com.ll.medium.domain.comment.comment.entity.Comment;
 import com.ll.medium.domain.member.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;

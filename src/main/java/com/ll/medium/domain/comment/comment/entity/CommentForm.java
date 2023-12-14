@@ -1,4 +1,4 @@
-package com.ll.medium.domain.article.article.controller;
+package com.ll.medium.domain.comment.comment.entity;
 
 import lombok.Getter;
 import lombok.Setter;

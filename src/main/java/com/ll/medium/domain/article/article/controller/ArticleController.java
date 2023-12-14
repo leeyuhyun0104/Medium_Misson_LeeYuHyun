@@ -1,7 +1,9 @@
 package com.ll.medium.domain.article.article.controller;
 
 import com.ll.medium.domain.article.article.entity.Article;
+import com.ll.medium.domain.article.article.entity.ArticleForm;
 import com.ll.medium.domain.article.article.service.ArticleService;
+import com.ll.medium.domain.comment.comment.entity.CommentForm;
 import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.member.member.service.MemberService;
 import jakarta.validation.Valid;

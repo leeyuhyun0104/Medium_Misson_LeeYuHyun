@@ -1,5 +1,6 @@
 package com.ll.medium.domain.member.member.controller;
 
+import com.ll.medium.domain.member.member.entity.JoinForm;
 import com.ll.medium.domain.member.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
