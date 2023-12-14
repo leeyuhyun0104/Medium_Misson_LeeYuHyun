@@ -84,7 +84,7 @@ public class ArticleController {
         if (!article.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.articleService.modify(article, articleForm.getTitle(), articleForm.getBody());
+        this.articleService.modify(article, articleForm.getTitle(), articleForm.getBody(), articleForm.getIsPublished());
         return String.format("redirect:/post/%s", id);
     }
 
@@ -96,7 +96,7 @@ public class ArticleController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.articleService.delete(article);
-        return "redirect:/";
+        return "redirect:/post/list";
     }
 
     @GetMapping("post/myList")

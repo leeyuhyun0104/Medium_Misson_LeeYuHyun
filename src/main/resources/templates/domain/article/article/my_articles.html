@@ -17,7 +17,7 @@
             <td th:text="${loop.index + 1}"></td>
             <!--article_detail 링크를 제목에 추가-->
             <td class="text-start">
-                <a th:href="@{|/post/${article.id}|}" th:text="${article.title}"></a>
+                <a th:href="@{|/b/${article.author.username}/${article.id}|}" th:text="${article.title}" style="display: block; text-align: center;"></a>
             </td>
             <td>
                 <span th:if="${article.isPublished}">공개</span>
@@ -29,5 +29,6 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/post/write}" class="btn btn-primary">글 작성</a>
 </div>
 </html>

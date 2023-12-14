@@ -17,7 +17,7 @@
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                <!--article_detail 링크를 제목에 추가-->
             <td class="text-start">
-                <a th:href="@{|/post/${article.id}|}" th:text="${article.title}"></a>
+                <a th:href="@{|/post/${article.id}|}" th:text="${article.title}" style="display: block; text-align: center;"></a>
             </td>
             <td>
                 <span th:if="${article.isPublished}">공개</span>

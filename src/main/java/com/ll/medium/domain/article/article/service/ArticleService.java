@@ -49,10 +49,11 @@ public class ArticleService {
         this.articleRepository.save(a);
     }
 
-    public void modify(Article article, String title, String body) {
+    public void modify(Article article, String title, String body, Boolean isPublished) {
         article.setTitle(title);
         article.setBody(body);
         article.setModifyDate(LocalDateTime.now());
+        article.setIsPublished(isPublished);
         this.articleRepository.save(article);
     }
 
@@ -83,6 +84,7 @@ public class ArticleService {
     public Article getUserArticle(String username, Integer id) {
         return articleRepository.findByAuthorUsernameAndId(username, id);
     }
+
 }
 
 
