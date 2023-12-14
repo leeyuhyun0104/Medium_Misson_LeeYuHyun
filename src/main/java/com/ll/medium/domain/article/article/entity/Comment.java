@@ -1,5 +1,6 @@
 package com.ll.medium.domain.article.article.entity;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
+
+    @ManyToOne
+    private Member author;
 }
 
