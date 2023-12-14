@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -29,4 +31,7 @@ public class Article {
 
     @Column(name = "IS_PUBLISHED")
     private Boolean isPublished;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList;
 }

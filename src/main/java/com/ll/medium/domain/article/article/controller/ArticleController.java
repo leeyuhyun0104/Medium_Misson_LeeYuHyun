@@ -32,7 +32,7 @@ public class ArticleController {
     }
 
     @GetMapping(value = "post/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, Principal principal) {
+    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm, Principal principal) {
         Article article = this.articleService.getArticle(id); // ArticleService의 getArticle 메서드 호출
         if (!article.getIsPublished()) { // 비공개 글인 경우
             if (principal == null) { // 로그인한 사용자가 아니라면
