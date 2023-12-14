@@ -17,7 +17,12 @@
             <td th:text="${loop.index + 1}"></td>
             <!--user_article_detail 링크를 제목에 추가-->
             <td class="text-start">
-                <a th:href="@{|/b/${article.author.username}/${article.id}|}" th:text="${article.title}" style="display: block; text-align: center;"></a>
+                <div style="text-align: center;">
+                    <a th:href="@{|/post/${article.id}|}" th:text="${article.title}" style="display: block;"></a>
+                    <span class="text-danger small" th:if="${#lists.size(article.commentList) > 0}"
+                          th:text="${#lists.size(article.commentList)} + '개의 댓글'">
+                    </span>
+                </div>
             </td>
             <td>
                 <span th:if="${article.isPublished}">공개</span>
