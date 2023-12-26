@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-class HomeController {
+class HomeControllerTest {
 
     @DisplayName("t1")
     @Test

@@ -1,6 +1,6 @@
-<html layout:decorate="~{global/layout}">
+<html layout:decorate="~{global/layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-3">
-    <h5 class="my-3 border-bottom pb-2">최신글 목록</h5>
+    <h5 class="my-3 border-bottom pb-2">내 글 목록</h5>
     <table class="table">
         <thead class="table-dark">
         <tr class="text-center">
@@ -12,8 +12,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="text-center"  th:each="article, loop : ${latestArticles}">
-            <td th:text="${loop.count}"></td>
+        <!--myArticles에 저장된 데이터를 하나씩 꺼내서 article 객체에 대입-->
+        <tr class="text-center" th:each="article, loop : ${myArticles}">
+            <td th:text="${loop.index + 1}"></td>
+            <!--article_detail 링크를 제목에 추가-->
             <td class="text-start">
                 <div style="text-align: center;">
                     <a th:href="@{|/post/${article.id}|}" th:text="${article.title}" style="display: block;"></a>
@@ -26,16 +28,12 @@
                 <span th:if="${article.isPublished}">공개</span>
                 <span th:unless="${article.isPublished}">비공개</span>
             </td>
-            <td>
-                <a th:href="@{'/b/' + ${article.author.username}}">
-                    <span th:text="${article.author.username}"></span>
-                </a>
-            </td>
+            <td><span th:if="${article.author != null}" th:text="${article.author.username}"></span></td>
+            <!--#temporals.format 이용해서 날짜 출력-->
             <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
     <a th:href="@{/post/write}" class="btn btn-primary">글 작성</a>
-    <a th:href="@{/post/list}" class="btn btn-primary">전체 글 목록</a>
 </div>
 </html>
