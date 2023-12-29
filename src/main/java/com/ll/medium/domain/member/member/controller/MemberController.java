@@ -34,7 +34,7 @@ public class MemberController {
             return "domain/member/member/join";
         }
         try{
-            memberService.join(joinForm.getUsername(), joinForm.getPassword());
+            memberService.join(joinForm.getUsername(), joinForm.getPassword(), joinForm.isPaid());
         }
         catch (DataIntegrityViolationException e){
             e.printStackTrace();
