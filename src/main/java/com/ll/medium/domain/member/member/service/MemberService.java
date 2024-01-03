@@ -27,6 +27,7 @@ public class MemberService {
         return member;
     }
 
+    @Transactional
     public void upgradeToPaidMember(String username){
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         Member member = optionalMember.orElse(null);
@@ -37,6 +38,11 @@ public class MemberService {
         else{
             throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
         }
+    }
+
+    public boolean isPaidMember(String username){
+        Optional<Member> optionalMember = memberRepository.findByUsername(username);
+        return optionalMember.map(Member::isPaid).orElse(false);
     }
 
     public Member getMember(String username) {

@@ -17,4 +17,6 @@ public class ArticleForm {
     private String body;
 
     private Boolean isPublished = false;
+
+    private Boolean isPaid = false;
 }

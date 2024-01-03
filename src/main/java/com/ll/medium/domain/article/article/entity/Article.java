@@ -35,4 +35,7 @@ public class Article {
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+
+    @Column(name = "IS_PAID")
+    private Boolean isPaid;
 }

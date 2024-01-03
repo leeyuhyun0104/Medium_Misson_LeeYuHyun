@@ -1,10 +1,12 @@
 package com.ll.medium.global.init;
 
+import com.ll.medium.domain.article.article.service.ArticleService;
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.member.member.service.MemberService;
 import groovy.util.logging.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,14 +17,15 @@ import org.springframework.context.annotation.Configuration;
 public class NotProd {
     private static final Logger log = LoggerFactory.getLogger(NotProd.class);
     private final MemberService memberService;
+    private final ArticleService articleService;
 
     @Bean
     public ApplicationRunner initNotProd() {
         return args -> {
             createSampleMembers();
+            createSampleArticles();
         };
     }
-
 
     private void createSampleMembers() {
         int totalMembersToCreate = 100;
@@ -51,4 +54,36 @@ public class NotProd {
             }
         }
     }
+
+    // 샘플 데이터 생성 메서드
+    private void createSampleArticles() {
+        int totalArticlesToCreate = 100;
+        int freeArticlesToCreate = totalArticlesToCreate / 2; // 무료글 수
+        int paidArticlesToCreate = totalArticlesToCreate - freeArticlesToCreate; // 유료글 수
+
+        Member user = memberService.getMember("user1");
+
+        // 무료글 생성
+        for (int i = 1; i <= freeArticlesToCreate; i++) {
+            String title = "무료글 " + i;
+            String body = "무료글 본문 " + i;
+            try {
+                articleService.create(title, body, user, true, false); // 무료글 생성
+            } catch (Exception e) {
+                log.error("Failed to create sample free articles: {}", e.getMessage());
+            }
+        }
+
+        // 유료글 생성
+        for (int i = 1; i <= paidArticlesToCreate; i++) {
+            String title = "유료글 " + i;
+            String body = "유료글 본문 " + i;
+            try {
+                articleService.create(title, body, user, false, true); // 유료글 생성
+            } catch (Exception e) {
+                log.error("Failed to create sample paid articles: {}", e.getMessage());
+            }
+        }
+    }
 }
+
