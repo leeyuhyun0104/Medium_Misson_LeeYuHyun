@@ -36,15 +36,15 @@ public class ArticleController {
     @GetMapping(value = "post/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm, Principal principal) {
         Article article = this.articleService.getArticle(id); // ArticleService의 getArticle 메서드 호출
+        if (!article.getIsPublished() && article.getIsPaid()) { // 비공개 글인 경우
+            if (principal == null) { // 로그인한 사용자가 아니라면
+                return "domain/article/article/login_required_message"; // 로그인 페이지로 리다이렉트
+            }
+        }
         // 유료회원 여부 확인
          if (article.getIsPaid() && (principal == null || !memberService.isPaidMember(principal.getName()))) {
              return "domain/article/article/paid_required_message";
          }
-        if (!article.getIsPublished() && article.getIsPaid()) { // 비공개 글인 경우
-            if (principal == null) { // 로그인한 사용자가 아니라면
-                return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-            }
-        }
         model.addAttribute("article", article);
         return "domain/article/article/article_detail";
     }
