@@ -39,21 +39,23 @@ public class ArticleService {
         }
     }
 
-    public void create(String title, String body, Member user, Boolean isPublished) {
+    public void create(String title, String body, Member user, Boolean isPublished, Boolean isPaid) {
         Article a = new Article();
         a.setTitle(title);
         a.setBody(body);
         a.setCreateDate(LocalDateTime.now());
         a.setAuthor(user);
         a.setIsPublished(isPublished);
+        a.setIsPaid(isPaid);
         this.articleRepository.save(a);
     }
 
-    public void modify(Article article, String title, String body, Boolean isPublished) {
+    public void modify(Article article, String title, String body, Boolean isPublished, Boolean isPaid) {
         article.setTitle(title);
         article.setBody(body);
         article.setModifyDate(LocalDateTime.now());
         article.setIsPublished(isPublished);
+        article.setIsPaid(isPaid);
         this.articleRepository.save(article);
     }
 
