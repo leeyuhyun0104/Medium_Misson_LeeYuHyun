@@ -36,11 +36,15 @@ public class ArticleController {
     @GetMapping(value = "post/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm, Principal principal) {
         Article article = this.articleService.getArticle(id); // ArticleService의 getArticle 메서드 호출
-        if (!article.getIsPublished()) { // 비공개 글인 경우
+        if (!article.getIsPublished() && article.getIsPaid()) { // 비공개 글인 경우
             if (principal == null) { // 로그인한 사용자가 아니라면
-                return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+                return "domain/article/article/login_required_message"; // 로그인 페이지로 리다이렉트
             }
         }
+        // 유료회원 여부 확인
+         if (article.getIsPaid() && (principal == null || !memberService.isPaidMember(principal.getName()))) {
+             return "domain/article/article/paid_required_message";
+         }
         model.addAttribute("article", article);
         return "domain/article/article/article_detail";
     }
@@ -49,6 +53,7 @@ public class ArticleController {
     @GetMapping("post/write")
     public String articleCreate(ArticleForm articleForm) {
         articleForm.setIsPublished(true); // 새 글 작성 시 기본값을 공개로 설정
+        articleForm.setIsPaid(false);
         return "domain/article/article/article_form";
     }
 
@@ -59,7 +64,7 @@ public class ArticleController {
             return "domain/article/article/article_form"; // 오류가 있는 경우 글 작성 폼으로
         }
         Member member = this.memberService.getMember(principal.getName());
-        this.articleService.create(articleForm.getTitle(), articleForm.getBody(), member, articleForm.getIsPublished()); //ArticleService 호출해서 새 글 저장
+        this.articleService.create(articleForm.getTitle(), articleForm.getBody(), member, articleForm.getIsPublished(), articleForm.getIsPaid()); //ArticleService 호출해서 새 글 저장
         return "redirect:/post/list"; // 저장 후 목록으로 이동
     }
 
@@ -86,7 +91,7 @@ public class ArticleController {
         if (!article.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.articleService.modify(article, articleForm.getTitle(), articleForm.getBody(), articleForm.getIsPublished());
+        this.articleService.modify(article, articleForm.getTitle(), articleForm.getBody(), articleForm.getIsPublished(), articleForm.getIsPaid());
         return String.format("redirect:/post/%s", id);
     }
 
